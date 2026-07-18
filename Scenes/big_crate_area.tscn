@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://w4mtb7jomo2q"]
+
+[ext_resource type="Script" uid="uid://cch55c0uenvbw" path="res://Scripts/Crate.gd" id="1_wynyw"]
+[ext_resource type="Texture2D" uid="uid://cpwca1rwu6olk" path="res://Sprites/kenney_sokoban-pack/PNG/Retina/Crates/crate_02_edited.png" id="2_1uw6j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6bp64"]
+size = Vector2(256, 256)
+
+[node name="Big crate area" type="Area2D" unique_id=1129185488 node_paths=PackedStringArray("raycast") groups=["crates"]]
+scale = Vector2(0.25, 0.25)
+script = ExtResource("1_wynyw")
+is_big = true
+raycast = NodePath("RayCast2D")
+
+[node name="Big crate" type="Sprite2D" parent="." unique_id=1364999877 groups=["crates"]]
+scale = Vector2(2, 2)
+texture = ExtResource("2_1uw6j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=627579677]
+scale = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_6bp64")
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=612785856]
+scale = Vector2(2, 2)
+target_position = Vector2(0, 192)
+collide_with_areas = true

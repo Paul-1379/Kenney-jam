@@ -2,7 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://d3orjdhly5cht" path="res://Sprites/kenney_sokoban-pack/Tilesheet/sokoban_tilesheet.png" id="1_bo1nx"]
 [ext_resource type="Texture2D" uid="uid://cm17lwuqhuwf1" path="res://Sprites/kenney_sokoban-pack/PNG/Retina/Player/player_01.png" id="2_8gbba"]
+[ext_resource type="PackedScene" uid="uid://ce8akukuhc7ax" path="res://Scenes/small_crate_area.tscn" id="2_kry3j"]
 [ext_resource type="Script" uid="uid://ydc0owrvcraj" path="res://Scripts/player.gd" id="3_8gbba"]
+[ext_resource type="PackedScene" uid="uid://w4mtb7jomo2q" path="res://Scenes/big_crate_area.tscn" id="3_21xkr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8gbba"]
 texture = ExtResource("1_bo1nx")
@@ -113,10 +115,15 @@ use_texture_padding = false
 1:6/0 = 0
 2:6/0 = 0
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_kry3j"]
+scenes/1/scene = ExtResource("2_kry3j")
+scenes/2/scene = ExtResource("3_21xkr")
+
 [sub_resource type="TileSet" id="TileSet_jjvhh"]
 tile_size = Vector2i(64, 64)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_8gbba")
+sources/1 = SubResource("TileSetScenesCollectionSource_kry3j")
 
 [sub_resource type="Animation" id="Animation_jjvhh"]
 length = 0.001
@@ -214,16 +221,25 @@ _data = {
 tile_map_data = PackedByteArray("AAAFAAIAAAALAAYAAAAGAAIAAAALAAYAAAAHAAIAAAALAAYAAAAIAAIAAAALAAYAAAAJAAIAAAALAAYAAAAKAAIAAAALAAYAAAAKAAMAAAALAAYAAAAKAAQAAAALAAYAAAAKAAUAAAALAAYAAAAKAAYAAAALAAYAAAAJAAcAAAALAAYAAAAIAAcAAAALAAYAAAAHAAcAAAALAAYAAAAGAAcAAAALAAYAAAAFAAcAAAALAAYAAAAFAAYAAAALAAYAAAAFAAUAAAALAAYAAAAFAAQAAAALAAYAAAAFAAMAAAALAAYAAAAGAAMAAAALAAYAAAAHAAMAAAALAAYAAAAIAAMAAAALAAYAAAAJAAMAAAALAAYAAAAJAAQAAAALAAYAAAAJAAUAAAALAAYAAAAJAAYAAAALAAYAAAAIAAYAAAALAAYAAAAHAAYAAAALAAYAAAAGAAUAAAALAAYAAAAGAAQAAAALAAYAAAAHAAQAAAALAAYAAAAHAAUAAAALAAYAAAAIAAUAAAALAAYAAAAGAAYAAAALAAYAAAAIAAQAAAALAAYAAAAKAAcAAAALAAYAAAAEAAEAAAALAAYAAAAEAAIAAAALAAYAAAAEAAMAAAALAAYAAAAEAAQAAAALAAYAAAAEAAUAAAALAAYAAAAEAAYAAAALAAYAAAAEAAcAAAALAAYAAAAEAAgAAAALAAYAAAAFAAEAAAALAAYAAAAFAAgAAAALAAYAAAAGAAEAAAALAAYAAAAGAAgAAAALAAYAAAAHAAEAAAALAAYAAAAHAAgAAAALAAYAAAAIAAEAAAALAAYAAAAIAAgAAAALAAYAAAAJAAEAAAALAAYAAAAJAAgAAAALAAYAAAAKAAEAAAALAAYAAAAKAAgAAAALAAYAAAALAAEAAAALAAYAAAALAAIAAAALAAYAAAALAAMAAAALAAYAAAALAAQAAAALAAYAAAALAAUAAAALAAYAAAALAAYAAAALAAYAAAALAAcAAAALAAYAAAALAAgAAAALAAYAAAA=")
 tile_set = SubResource("TileSet_jjvhh")
 
-[node name="Walls" type="TileMapLayer" parent="Tilemap" unique_id=935293628]
+[node name="Crates" type="TileMapLayer" parent="Tilemap" unique_id=355954287]
+tile_map_data = PackedByteArray("AAAIAAQAAQAAAAAAAQAKAAMAAQAAAAAAAQAJAAUAAQAAAAAAAQA=")
+tile_set = SubResource("TileSet_jjvhh")
+
+[node name="Walls" type="TileMapLayer" parent="Tilemap" unique_id=2076243175]
 tile_map_data = PackedByteArray("AAALAAIAAAAGAAcAAAALAAMAAAAGAAcAAAALAAQAAAAGAAcAAAALAAUAAAAGAAcAAAALAAYAAAAGAAcAAAALAAcAAAAGAAcAAAALAAgAAAAGAAcAAAAKAAgAAAAGAAcAAAAJAAgAAAAGAAcAAAAIAAgAAAAGAAcAAAAHAAgAAAAGAAcAAAAGAAgAAAAGAAcAAAAFAAgAAAAGAAcAAAAEAAgAAAAGAAcAAAAEAAcAAAAGAAcAAAAEAAQAAAAGAAcAAAAEAAMAAAAGAAcAAAAEAAEAAAAGAAcAAAAFAAEAAAAGAAcAAAAGAAEAAAAGAAcAAAAHAAEAAAAGAAcAAAAIAAEAAAAGAAcAAAAJAAEAAAAGAAcAAAAKAAEAAAAGAAcAAAALAAEAAAAGAAcAAAA=")
 tile_set = SubResource("TileSet_jjvhh")
 
-[node name="Player" type="Sprite2D" parent="." unique_id=1396035597 node_paths=PackedStringArray("raycast", "animation_player")]
-position = Vector2(288, 160)
+[node name="Big crate area" parent="." unique_id=1129185488 instance=ExtResource("3_21xkr")]
+position = Vector2(384, 256)
+
+[node name="Player" type="Sprite2D" parent="." unique_id=1396035597 node_paths=PackedStringArray("simple_raycast", "big_size_raycast", "rotated_center", "animation_player")]
+position = Vector2(512, 192)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_8gbba")
 script = ExtResource("3_8gbba")
-raycast = NodePath("RayCast2D")
+simple_raycast = NodePath("RayCast2D")
+big_size_raycast = [NodePath("rotated_center/rotated raycast"), NodePath("rotated_center/rotated raycast2")]
+rotated_center = NodePath("rotated_center")
 animation_player = NodePath("AnimationPlayer")
 size_mouse_zone = 30.0
 
@@ -231,4 +247,23 @@ size_mouse_zone = 30.0
 libraries/ = SubResource("AnimationLibrary_jjvhh")
 
 [node name="RayCast2D" type="RayCast2D" parent="Player" unique_id=1496384865]
-target_position = Vector2(0, 128)
+target_position = Vector2(-64, 128)
+collide_with_areas = true
+
+[node name="rotated_center" type="Node2D" parent="Player" unique_id=1362731982]
+
+[node name="rotated raycast" type="RayCast2D" parent="Player/rotated_center" unique_id=828138148]
+position = Vector2(-32, 0)
+target_position = Vector2(0, 96)
+collide_with_areas = true
+
+[node name="rotated raycast2" type="RayCast2D" parent="Player/rotated_center" unique_id=1550692180]
+position = Vector2(32, 0)
+target_position = Vector2(0, 96)
+collide_with_areas = true
+
+[node name="Big crate area2" parent="." unique_id=186846166 instance=ExtResource("3_21xkr")]
+position = Vector2(64, 256)
+
+[node name="Big crate area3" parent="." unique_id=2063259047 instance=ExtResource("3_21xkr")]
+position = Vector2(192, 256)

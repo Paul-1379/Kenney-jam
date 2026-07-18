@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://ce8akukuhc7ax"]
+
+[ext_resource type="Script" uid="uid://cch55c0uenvbw" path="res://Scripts/Crate.gd" id="1_b6g5r"]
+[ext_resource type="Texture2D" uid="uid://dsqrnm4j10q0j" path="res://Sprites/kenney_sokoban-pack/PNG/Retina/Crates/crate_05.png" id="2_fak6i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_21xkr"]
+size = Vector2(128, 128)
+
+[node name="Small crate area" type="Area2D" unique_id=1115678510 node_paths=PackedStringArray("raycast") groups=["crates"]]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_b6g5r")
+raycast = NodePath("RayCast2D")
+
+[node name="small crate sprite" type="Sprite2D" parent="." unique_id=482532978]
+texture = ExtResource("2_fak6i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1548772871]
+shape = SubResource("RectangleShape2D_21xkr")
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=1086708098]
+target_position = Vector2(0, 128)
+collide_with_areas = true
