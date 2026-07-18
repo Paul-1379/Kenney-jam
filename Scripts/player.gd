@@ -9,7 +9,7 @@ extends Sprite2D
 @export var size_mouse_zone: float
 @export var big_size: bool
 var tile_pos: Vector2i
-
+var tween_finished: bool = true
 func _ready() -> void:
 	update_pos(true)
 
@@ -17,17 +17,16 @@ func _process(delta: float) -> void:
 	if not Input.is_action_just_pressed("size"):
 		return
 		
-	var mouse_pos = get_viewport().get_mouse_position()
-	var delta_x = mouse_pos.x - position.x
-	var delta_y = mouse_pos.y - position.y
-
-	if (mouse_pos - position).length_squared() < size_mouse_zone * size_mouse_zone:
+	var mouse_pos = get_global_mouse_position() - position
+	print(mouse_pos)
+	print()
+	if mouse_pos.length_squared() < size_mouse_zone * size_mouse_zone:
 		switch_size()
 	else:
-		if abs(delta_x) > abs(delta_y):
-			move(Vector2i.RIGHT if delta_x > 0 else Vector2i.LEFT)
+		if abs(mouse_pos.x) > abs(mouse_pos.y):
+			move(Vector2i.RIGHT if mouse_pos.x > 0 else Vector2i.LEFT)
 		else:
-			move(Vector2i.DOWN if delta_y > 0 else Vector2i.UP)
+			move(Vector2i.DOWN if mouse_pos.y > 0 else Vector2i.UP)
 
 func move(direction: Vector2i) -> void:
 	var can_move = false
@@ -35,7 +34,7 @@ func move(direction: Vector2i) -> void:
 		can_move = check_can_move(direction, big_size_raycast)
 	else:
 		can_move = check_can_move(direction, [simple_raycast])
-	if can_move:
+	if can_move and tween_finished:
 		tile_pos += direction
 		update_pos(false)
 
@@ -85,8 +84,35 @@ func update_pos(instantanious: bool) -> void:
 	if instantanious:
 		position = target
 	else:
+		tween_finished = false
 		var tween = create_tween()
-		tween.tween_property(self, "position", Vector2(target), 0.08)
+		var movement = target - position
+		var overshoot = target + movement.normalized() * 4.0 # 4 pixels de dépassement
+
+		tween.tween_property(self, "position", overshoot, 0.13) \
+			.set_trans(Tween.TRANS_CUBIC) \
+			.set_ease(Tween.EASE_OUT)
+
+		tween.tween_property(self, "position", Vector2(target), 0.05) \
+			.set_trans(Tween.TRANS_BACK) \
+			.set_ease(Tween.EASE_OUT)
+		
+		var tween2 = create_tween()
+		var initial_scale = scale
+		var final_scale = scale
+		final_scale.y *= 0.7 if movement.x < movement.y else 1
+		final_scale.x *= 0.7 if movement.x > movement.y else 1
+		
+		tween2.tween_property(self, "scale", final_scale, 0.1) \
+			.set_trans(Tween.TRANS_CUBIC) \
+			.set_ease(Tween.EASE_OUT)
+
+		tween2.tween_property(self, "scale", initial_scale, 0.1) \
+			.set_trans(Tween.TRANS_BACK) \
+			.set_ease(Tween.EASE_OUT)
+		
+		await tween.finished
+		tween_finished = true
 
 func switch_size() -> void:
 	if animation_player.is_playing():
