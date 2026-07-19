@@ -4,7 +4,7 @@ extends Node2D
 @export var phantomCamera: PhantomCamera2D
 @export var zone_centers: Array[Marker2D]
 @export var zone_spawn_points: Array[Marker2D]
-
+@export var confettis: Control
 var current_zone: int
 
 func _ready() -> void:
@@ -22,6 +22,8 @@ func update_current_zone(body, zone_number: int)-> void:
 	GlobalData.camera_center_path = zone_centers[current_zone].get_path()
 	GlobalData.spawn_point = zone_spawn_points[current_zone].position
 	print(GlobalData.spawn_point)
+	if zone_number == 9:
+		confettis.can_play_confettis = true
 
 func _on_zone_body_entered(body: Node2D, zone_number: int) -> void:
 	update_current_zone(body, zone_number)
