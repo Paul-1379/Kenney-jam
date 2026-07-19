@@ -1,11 +1,18 @@
 extends Sprite2D
 
+@export var override_position: bool
 @export var simple_raycast: RayCast2D
 @export var big_size_raycast: Array[RayCast2D]
 @export var rotated_center: Node2D
 @export var input_buffer_timer: Timer
 @export var input_buffer_time: float = 0.2
 @export var animation_player: AnimationPlayer
+
+@export_group("Player sprites")
+@export var down_sprite: Texture
+@export var up_sprite: Texture
+@export var left_sprite: Texture
+@export var right_sprite: Texture
 
 @export var size_mouse_zone: float
 @export var big_size: bool
@@ -15,6 +22,10 @@ var move_tween_finished: bool = true
 var input_buffer_move_dir: Vector2
 func _ready() -> void:
 	tile_pos = position_to_tile(GlobalData.spawn_point)
+	if override_position and not GlobalData.override_position_done:
+		tile_pos = position_to_tile(position)
+		GlobalData.override_position_done = true
+	
 	update_pos(true)
 
 func _process(_delta: float) -> void:
@@ -47,8 +58,20 @@ func move(direction: Vector2i) -> void:
 	else:
 		can_move = check_can_move(direction, [simple_raycast])
 	if can_move:
+		update_sprite(direction)
 		tile_pos += direction
 		update_pos(false)
+
+func update_sprite(direction: Vector2i):
+	match direction:
+		Vector2i.RIGHT:
+			texture = right_sprite
+		Vector2i.LEFT:
+			texture = left_sprite
+		Vector2i.UP:
+			texture = up_sprite
+		Vector2i.DOWN:
+			texture = down_sprite
 
 func check_can_move(direction: Vector2i, to_check_raycasts: Array[RayCast2D]) -> bool:
 	rotated_center.rotation_degrees = rad_to_deg(Vector2(direction).angle()) - 90

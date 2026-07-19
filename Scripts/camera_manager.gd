@@ -21,6 +21,7 @@ func update_current_zone(body, zone_number: int)-> void:
 	phantomCamera.follow_target = zone_centers[current_zone]
 	GlobalData.camera_center_path = zone_centers[current_zone].get_path()
 	GlobalData.spawn_point = zone_spawn_points[current_zone].position
+	print(GlobalData.spawn_point)
 
 func _on_zone_body_entered(body: Node2D, zone_number: int) -> void:
 	update_current_zone(body, zone_number)
