@@ -24,8 +24,7 @@ GlobalData="*uid://8wxsohuyhp4f"
 
 window/size/viewport_width=1080
 window/size/viewport_height=720
-window/size/mode=1
-window/stretch/mode="viewport"
+window/stretch/mode="canvas_items"
 window/stretch/aspect="keep_width"
 
 [editor_plugins]
@@ -51,4 +50,4 @@ size={
 [rendering]
 
 rendering_device/driver.windows="d3d12"
-renderer/rendering_method="mobile"
+renderer/rendering_method="gl_compatibility"

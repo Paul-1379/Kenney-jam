@@ -159,7 +159,7 @@ func update_pos(instantanious: bool) -> void:
 		move_tween_finished = true
 
 func switch_size() -> void:
-	if animation_player.is_playing():
+	if animation_player.is_playing() or not move_tween_finished:
 		return
 	
 	if not big_size:
