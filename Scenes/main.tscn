@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://bsipgyrcevpj6"]
 
 [ext_resource type="Texture2D" uid="uid://d3orjdhly5cht" path="res://Sprites/kenney_sokoban-pack/Tilesheet/sokoban_tilesheet.png" id="1_bo1nx"]
+[ext_resource type="Script" uid="uid://cpy1pe20utiab" path="res://Scripts/camera_manager.gd" id="1_ynf5e"]
 [ext_resource type="Texture2D" uid="uid://cm17lwuqhuwf1" path="res://Sprites/kenney_sokoban-pack/PNG/Retina/Player/player_01.png" id="2_8gbba"]
 [ext_resource type="PackedScene" uid="uid://ce8akukuhc7ax" path="res://Scenes/small_crate_area.tscn" id="2_kry3j"]
 [ext_resource type="Script" uid="uid://ydc0owrvcraj" path="res://Scripts/player.gd" id="3_8gbba"]
@@ -8,11 +9,17 @@
 [ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="6_6bp64"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="6_344ge"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="7_344ge"]
+[ext_resource type="Texture2D" uid="uid://ba6mvw5lm4si6" path="res://Sprites/kenney_ui-pack-adventure/PNG/Double/panel_grey_bolts_dark.png" id="10_hptm8"]
+[ext_resource type="Texture2D" uid="uid://choswltdtowyh" path="res://Sprites/kenney_cursor-pack/PNG/Basic/Double/rotate_ccw.png" id="11_6iyac"]
+[ext_resource type="Texture2D" uid="uid://d10qbr4lk4r26" path="res://Sprites/kenney_cursor-pack/PNG/Outline/Double/rotate_ccw.png" id="12_fdnlq"]
+[ext_resource type="Texture2D" uid="uid://cloquartgwv0d" path="res://Sprites/kenney_sokoban-pack/PNG/Retina/playerFace.png" id="13_jkdf5"]
+[ext_resource type="Texture2D" uid="uid://bun7ioq50re8b" path="res://Sprites/kenney_sokoban-pack/PNG/Default size/playerFace.png" id="14_wsu2k"]
+[ext_resource type="Texture2D" uid="uid://cxugiyliyfmic" path="res://Sprites/kenney_cursor-pack/PNG/Outline/Double/arrow_e.png" id="15_wsu2k"]
+[ext_resource type="Texture2D" uid="uid://dqf1o1qfkmqwp" path="res://Sprites/kenney_cursor-pack/PNG/Outline/Double/cursor_exclamation.png" id="16_k12tt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8gbba"]
 texture = ExtResource("1_bo1nx")
 texture_region_size = Vector2i(64, 64)
-use_texture_padding = false
 4:0/0 = 0
 5:0/0 = 0
 6:0/0 = 0
@@ -216,10 +223,61 @@ _data = {
 &"shrink": SubResource("Animation_kry3j")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ynf5e"]
+size = Vector2(64, 96)
+
 [sub_resource type="Resource" id="Resource_ynf5e"]
 script = ExtResource("7_344ge")
+transition = 1
 
-[node name="Node2D" type="Node2D" unique_id=751346783]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hptm8"]
+size = Vector2(650, 608)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d1ilt"]
+size = Vector2(1375, 1136)
+
+[sub_resource type="Animation" id="Animation_d1ilt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_hptm8"]
+resource_name = "fade"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d1ilt"]
+_data = {
+&"RESET": SubResource("Animation_d1ilt"),
+&"fade": SubResource("Animation_hptm8")
+}
+
+[node name="Node2D" type="Node2D" unique_id=751346783 node_paths=PackedStringArray("playerBody", "phantomCamera", "zone_centers", "zone_spawn_points")]
+script = ExtResource("1_ynf5e")
+playerBody = NodePath("Player/CharacterBody2D")
+phantomCamera = NodePath("PhantomCamera2D")
+zone_centers = [NodePath("Zones/Zone centers/Zone center0"), NodePath("Zones/Zone centers/Zone center1"), NodePath("Zones/Zone centers/Zone center2"), NodePath("Zones/Zone centers/Zone center3"), NodePath("Zones/Zone centers/Zone center4")]
+zone_spawn_points = [NodePath("Zones/Zone spawn points/Zone spawn point0"), NodePath("Zones/Zone spawn points/Zone spawn point1"), NodePath("Zones/Zone spawn points/Zone spawn point2"), NodePath("Zones/Zone spawn points/Zone spawn point3"), NodePath("Zones/Zone spawn points/Zone spawn point4")]
 
 [node name="Tilemap" type="Node2D" parent="." unique_id=1225153605]
 
@@ -228,20 +286,14 @@ tile_map_data = PackedByteArray("AAD///3/AAALAAYAAAD///7/AAALAAYAAAD/////AAALAAY
 tile_set = SubResource("TileSet_jjvhh")
 
 [node name="Crates" type="TileMapLayer" parent="Tilemap" unique_id=355954287]
-tile_map_data = PackedByteArray("AAACAP//AQAAAAAAAQAXAA4AAQAAAAAAAQAWAAwAAQAAAAAAAQA=")
+tile_map_data = PackedByteArray("AAACAP//AQAAAAAAAQAXAAoAAQAAAAAAAQAVABUAAQAAAAAAAQAXAAsAAQAAAAAAAQAXAAwAAQAAAAAAAQA=")
 tile_set = SubResource("TileSet_jjvhh")
 
 [node name="Walls" type="TileMapLayer" parent="Tilemap" unique_id=2076243175]
-tile_map_data = PackedByteArray("AAAAAP3/AAAGAAcAAAAAAAIAAAAGAAcAAAABAP3/AAAGAAcAAAABAAIAAAAGAAcAAAACAP3/AAAGAAcAAAACAAIAAAAGAAcAAAADAP3/AAAGAAcAAAADAAIAAAAGAAcAAAAEAP7/AAAGAAcAAAAEAAAAAAAGAAcAAAAFAP7/AAAGAAcAAAAFAAAAAAAGAAcAAAAGAP7/AAAGAAcAAAAGAAAAAAAGAAcAAAAHAP7/AAAGAAcAAAAHAAAAAAAGAAcAAAAIAP7/AAAGAAcAAAAIAAAAAAAGAAcAAAAJAAMAAAAGAAcAAAAKAAMAAAAGAAcAAAALAAMAAAAGAAcAAAAMAAMAAAAGAAcAAAANAAMAAAAGAAcAAAAOAP3/AAAGAAcAAAAOAAMAAAAGAAcAAAAPAP7/AAAGAAcAAAAPAAAAAAAGAAcAAAAQAP7/AAAGAAcAAAAQAAAAAAAGAAcAAAARAP7/AAAGAAcAAAARAAAAAAAGAAcAAAASAP7/AAAGAAcAAAASAAAAAAAGAAcAAAATAP7/AAAGAAcAAAATAAAAAAAGAAcAAAAUAP3/AAAGAAcAAAAUAAAAAAAGAAcAAAAUAAEAAAAGAAcAAAAUAAQAAAAGAAcAAAAVAP3/AAAGAAcAAAAVAAAAAAAGAAcAAAAVAAEAAAAGAAcAAAAVAAQAAAAGAAcAAAAWAP3/AAAGAAcAAAAXAP3/AAAGAAcAAAAYAP3/AAAGAAcAAAAZAP3/AAAGAAcAAAAZAAAAAAAGAAcAAAAZAAQAAAAGAAcAAAAaAP3/AAAGAAcAAAAaAAAAAAAGAAcAAAAaAAEAAAAGAAcAAAAaAAQAAAAGAAcAAAD///3/AAAGAAcAAAD///7/AAAGAAcAAAD/////AAAGAAcAAAD//wAAAAAGAAcAAAD//wEAAAAGAAcAAAD//wIAAAAGAAcAAAABAP//AAAGAAcAAAABAAAAAAAGAAcAAAADAP7/AAAGAAcAAAADAAAAAAAGAAcAAAADAAEAAAAGAAcAAAAIAP3/AAAGAAcAAAAIAAEAAAAGAAcAAAAIAAIAAAAGAAcAAAAIAAMAAAAGAAcAAAAOAP7/AAAGAAcAAAAOAAAAAAAGAAcAAAAOAAEAAAAGAAcAAAAOAAIAAAAGAAcAAAATAP3/AAAGAAcAAAAYAAAAAAAGAAcAAAAYAAQAAAAGAAcAAAAZAAEAAAAGAAcAAAAaAP7/AAAGAAcAAAAaAP//AAAGAAcAAAAaAAIAAAAGAAcAAAAaAAMAAAAGAAcAAAAOAPz/AAAGAAcAAAANAPz/AAAGAAcAAAAMAPz/AAAGAAcAAAALAPz/AAAGAAcAAAAKAPz/AAAGAAcAAAAJAPz/AAAGAAcAAAAIAPz/AAAGAAcAAAAWAAQAAAAGAAcAAAAUAAIAAAAGAAcAAAAUAAMAAAAGAAcAAAAWAAUAAAAGAAcAAAAWAAYAAAAGAAcAAAAWAAcAAAAGAAcAAAAYAAUAAAAGAAcAAAAYAAYAAAAGAAcAAAAYAAcAAAAGAAcAAAAYAA8AAAAGAAcAAAAYABAAAAAGAAcAAAAWAA8AAAAGAAcAAAAWABAAAAAGAAcAAAAYAAwAAAAGAAcAAAAYAA0AAAAGAAcAAAAZAA0AAAAGAAcAAAAZAAwAAAAGAAcAAAAZAA8AAAAGAAcAAAAaAA8AAAAGAAcAAAAbAA8AAAAGAAcAAAAbAA4AAAAGAAcAAAAbAA0AAAAGAAcAAAAbAAwAAAAGAAcAAAAbAAsAAAAGAAcAAAAbAAoAAAAGAAcAAAAbAAkAAAAGAAcAAAAbAAgAAAAGAAcAAAAbAAcAAAAGAAcAAAAaAAcAAAAGAAcAAAAZAAcAAAAGAAcAAAAVAAcAAAAGAAcAAAAUAAcAAAAGAAcAAAATAAcAAAAGAAcAAAATAAgAAAAGAAcAAAATAAkAAAAGAAcAAAATAAsAAAAGAAcAAAATAAoAAAAGAAcAAAASAAsAAAAGAAcAAAASAAwAAAAGAAcAAAASAA0AAAAGAAcAAAATAA0AAAAGAAcAAAATAA4AAAAGAAcAAAATAA8AAAAGAAcAAAAUAA8AAAAGAAcAAAAVAA8AAAAGAAcAAAA=")
+tile_map_data = PackedByteArray("AAAAAP3/AAAGAAcAAAAAAAIAAAAGAAcAAAABAP3/AAAGAAcAAAABAAIAAAAGAAcAAAACAP3/AAAGAAcAAAACAAIAAAAGAAcAAAADAP3/AAAGAAcAAAADAAIAAAAGAAcAAAAEAP7/AAAGAAcAAAAEAAAAAAAGAAcAAAAFAP7/AAAGAAcAAAAFAAAAAAAGAAcAAAAGAP7/AAAGAAcAAAAGAAAAAAAGAAcAAAAHAP7/AAAGAAcAAAAHAAAAAAAGAAcAAAAIAP7/AAAGAAcAAAAIAAAAAAAGAAcAAAAJAAMAAAAGAAcAAAAKAAMAAAAGAAcAAAALAAMAAAAGAAcAAAAMAAMAAAAGAAcAAAANAAMAAAAGAAcAAAAOAP3/AAAGAAcAAAAOAAMAAAAGAAcAAAAPAP7/AAAGAAcAAAAPAAAAAAAGAAcAAAAQAP7/AAAGAAcAAAAQAAAAAAAGAAcAAAARAP7/AAAGAAcAAAARAAAAAAAGAAcAAAASAP7/AAAGAAcAAAASAAAAAAAGAAcAAAATAP7/AAAGAAcAAAATAAAAAAAGAAcAAAAUAP3/AAAGAAcAAAAUAAAAAAAGAAcAAAAUAAEAAAAGAAcAAAAUAAQAAAAGAAcAAAAVAP3/AAAGAAcAAAAVAAAAAAAGAAcAAAAVAAEAAAAGAAcAAAAVAAQAAAAGAAcAAAAWAP3/AAAGAAcAAAAXAP3/AAAGAAcAAAAYAP3/AAAGAAcAAAAZAP3/AAAGAAcAAAAZAAAAAAAGAAcAAAAZAAQAAAAGAAcAAAAaAP3/AAAGAAcAAAAaAAAAAAAGAAcAAAAaAAEAAAAGAAcAAAAaAAQAAAAGAAcAAAD///3/AAAGAAcAAAD///7/AAAGAAcAAAD/////AAAGAAcAAAD//wAAAAAGAAcAAAD//wEAAAAGAAcAAAD//wIAAAAGAAcAAAABAP//AAAGAAcAAAABAAAAAAAGAAcAAAADAP7/AAAGAAcAAAADAAAAAAAGAAcAAAADAAEAAAAGAAcAAAAIAP3/AAAGAAcAAAAIAAEAAAAGAAcAAAAIAAIAAAAGAAcAAAAIAAMAAAAGAAcAAAAOAP7/AAAGAAcAAAAOAAAAAAAGAAcAAAAOAAEAAAAGAAcAAAAOAAIAAAAGAAcAAAATAP3/AAAGAAcAAAAYAAAAAAAGAAcAAAAYAAQAAAAGAAcAAAAZAAEAAAAGAAcAAAAaAP7/AAAGAAcAAAAaAP//AAAGAAcAAAAaAAIAAAAGAAcAAAAaAAMAAAAGAAcAAAAOAPz/AAAGAAcAAAANAPz/AAAGAAcAAAAMAPz/AAAGAAcAAAALAPz/AAAGAAcAAAAKAPz/AAAGAAcAAAAJAPz/AAAGAAcAAAAIAPz/AAAGAAcAAAAWAAQAAAAGAAcAAAAUAAIAAAAGAAcAAAAUAAMAAAAGAAcAAAAWAAUAAAAGAAcAAAAWAAYAAAAGAAcAAAAWAAcAAAAGAAcAAAAYAAUAAAAGAAcAAAAYAAYAAAAGAAcAAAAYAAcAAAAGAAcAAAAaAAcAAAAGAAcAAAAZAAcAAAAGAAcAAAAaAAgAAAAGAAcAAAAaAAoAAAAGAAcAAAAaAAsAAAAGAAcAAAAXAA4AAAAGAAcAAAAVAA8AAAAGAAcAAAAVABAAAAAGAAcAAAAXAA8AAAAGAAcAAAAXABAAAAAGAAcAAAAXABEAAAAGAAcAAAAVABEAAAAGAAcAAAAXABIAAAAGAAcAAAAYABIAAAAGAAcAAAAYABMAAAAGAAcAAAAVABIAAAAGAAcAAAAUABIAAAAGAAcAAAATABIAAAAGAAcAAAASABIAAAAGAAcAAAARABIAAAAGAAcAAAARABMAAAAGAAcAAAARABQAAAAGAAcAAAARABUAAAAGAAcAAAASABUAAAAGAAcAAAASABYAAAAGAAcAAAATABYAAAAGAAcAAAAUABcAAAAGAAcAAAAVABcAAAAGAAcAAAATABcAAAAGAAcAAAAWABcAAAAGAAcAAAAaABQAAAAGAAcAAAAaABUAAAAGAAcAAAAaABYAAAAGAAcAAAAYABcAAAAGAAcAAAAYABQAAAAGAAcAAAAZABQAAAAGAAcAAAAZABcAAAAGAAcAAAAaABcAAAAGAAcAAAAUAAoAAAAGAAcAAAAWAAkAAAAGAAcAAAAVAAkAAAAGAAcAAAAUAA8AAAAGAAcAAAATAA8AAAAGAAcAAAATAA4AAAAGAAcAAAATAA0AAAAGAAcAAAATAAwAAAAGAAcAAAAbAA0AAAAGAAcAAAAcAA0AAAAGAAcAAAAcAAoAAAAGAAcAAAAcAAkAAAAGAAcAAAAcAAgAAAAGAAcAAAAcAAsAAAAGAAcAAAAcAAwAAAAGAAcAAAAbAAgAAAAGAAcAAAAYAA4AAAAGAAcAAAAZAA4AAAAGAAcAAAAaAA4AAAAGAAcAAAAbAA4AAAAGAAcAAAAVAAwAAAAGAAcAAAAWAA0AAAAGAAcAAAATAAoAAAAGAAcAAAATAAsAAAAGAAcAAAAWAAgAAAAGAAcAAAAVAAoAAAAGAAcAAAAXAA0AAAAGAAcAAAA=")
 tile_set = SubResource("TileSet_jjvhh")
 
-[node name="Big crate area" parent="." unique_id=1129185488 instance=ExtResource("3_21xkr")]
-position = Vector2(832, 0)
-
-[node name="Big crate area3" parent="." unique_id=2063259047 instance=ExtResource("3_21xkr")]
-position = Vector2(1472, 192)
-
-[node name="Player" type="Sprite2D" parent="." unique_id=1396035597 node_paths=PackedStringArray("simple_raycast", "big_size_raycast", "rotated_center", "animation_player")]
+[node name="Player" type="Sprite2D" parent="." unique_id=1396035597 node_paths=PackedStringArray("simple_raycast", "big_size_raycast", "rotated_center", "input_buffer_timer", "animation_player")]
 position = Vector2(32, 32)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_8gbba")
@@ -249,6 +301,8 @@ script = ExtResource("3_8gbba")
 simple_raycast = NodePath("RayCast2D")
 big_size_raycast = [NodePath("rotated_center/rotated raycast"), NodePath("rotated_center/rotated raycast2")]
 rotated_center = NodePath("rotated_center")
+input_buffer_timer = NodePath("input buffer timer")
+input_buffer_time = 1.0
 animation_player = NodePath("AnimationPlayer")
 size_mouse_zone = 30.0
 
@@ -271,9 +325,20 @@ position = Vector2(32, 0)
 target_position = Vector2(0, 96)
 collide_with_areas = true
 
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Player" unique_id=1814265355]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/CharacterBody2D" unique_id=143909247]
+shape = SubResource("RectangleShape2D_ynf5e")
+
+[node name="input buffer timer" type="Timer" parent="Player" unique_id=1966348709]
+one_shot = true
+ignore_time_scale = true
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1506383792]
 top_level = true
-position = Vector2(32, 32)
+position = Vector2(96, -8)
 editor_draw_limits = true
 
 [node name="PhantomCameraHost" type="Node" parent="Camera2D" unique_id=506200626]
@@ -282,14 +347,197 @@ process_physics_priority = 300
 script = ExtResource("6_344ge")
 metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
+[node name="scale animation" type="Node2D" parent="." unique_id=1135676102]
+
+[node name="ArrowE" type="Sprite2D" parent="scale animation" unique_id=244253578]
+position = Vector2(648, -312)
+texture = ExtResource("15_wsu2k")
+
+[node name="player icon big" type="Sprite2D" parent="scale animation" unique_id=1570868476]
+position = Vector2(744, -328)
+texture = ExtResource("13_jkdf5")
+
+[node name="player icon small" type="Sprite2D" parent="scale animation" unique_id=1981001666]
+position = Vector2(576, -320)
+texture = ExtResource("14_wsu2k")
+
+[node name="CursorExclamation" type="Sprite2D" parent="scale animation" unique_id=732162172]
+position = Vector2(592, -296)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("16_k12tt")
+
 [node name="PhantomCamera2D" type="Node2D" parent="." unique_id=16291659 node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(32, 32)
+position = Vector2(96, -8)
 script = ExtResource("6_6bp64")
-follow_mode = 5
-follow_target = NodePath("../Player")
+follow_mode = 2
+follow_target = NodePath("../Zones/Zone centers/Zone center0")
 tween_resource = SubResource("Resource_ynf5e")
+follow_damping = true
+follow_damping_value = Vector2(1, 1)
 dead_zone_width = 0.3
 dead_zone_height = 0.3
 draw_limits = true
 metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
+
+[node name="Big crates" type="Node2D" parent="." unique_id=384543161]
+
+[node name="Big crate area" parent="Big crates" unique_id=1129185488 instance=ExtResource("3_21xkr")]
+position = Vector2(1344, 1280)
+
+[node name="Big crate area5" parent="Big crates" unique_id=1042846908 instance=ExtResource("3_21xkr")]
+position = Vector2(1472, 192)
+
+[node name="Big crate area3" parent="Big crates" unique_id=2063259047 instance=ExtResource("3_21xkr")]
+position = Vector2(832, 0)
+
+[node name="Big crate area4" parent="Big crates" unique_id=2012874818 instance=ExtResource("3_21xkr")]
+position = Vector2(1600, 704)
+
+[node name="Big crate area6" parent="Big crates" unique_id=345056071 instance=ExtResource("3_21xkr")]
+position = Vector2(1472, 1408)
+
+[node name="Zones" type="Node2D" parent="." unique_id=391686528]
+
+[node name="Zone centers" type="Node2D" parent="Zones" unique_id=1259383154]
+
+[node name="Zone center0" type="Marker2D" parent="Zones/Zone centers" unique_id=225630604]
+position = Vector2(96, -8)
+scale = Vector2(0.5, 0.5)
+
+[node name="Zone center1" type="Marker2D" parent="Zones/Zone centers" unique_id=1691661085]
+position = Vector2(744, 0)
+scale = Vector2(0.5, 0.5)
+
+[node name="Zone center2" type="Marker2D" parent="Zones/Zone centers" unique_id=1759022361]
+position = Vector2(1504, 184)
+scale = Vector2(0.5, 0.5)
+
+[node name="Zone center3" type="Marker2D" parent="Zones/Zone centers" unique_id=1418411959]
+position = Vector2(1520, 768)
+scale = Vector2(0.5, 0.5)
+
+[node name="Zone center4" type="Marker2D" parent="Zones/Zone centers" unique_id=1967757686]
+position = Vector2(1408, 1416)
+scale = Vector2(0.5, 0.5)
+
+[node name="Zones areas" type="Node2D" parent="Zones" unique_id=865727681]
+
+[node name="zone" type="Area2D" parent="Zones/Zones areas" unique_id=1314298159]
+position = Vector2(112, 8)
+scale = Vector2(0.5, 0.5)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Zones/Zones areas/zone" unique_id=976042603]
+position = Vector2(75, 0)
+shape = SubResource("RectangleShape2D_hptm8")
+
+[node name="zone1" type="Area2D" parent="Zones/Zones areas" unique_id=1530360675]
+position = Vector2(728, -8)
+scale = Vector2(0.5, 0.5)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Zones/Zones areas/zone1" unique_id=2068282624]
+position = Vector2(16.5, 11)
+shape = SubResource("RectangleShape2D_d1ilt")
+
+[node name="zone2" type="Area2D" parent="Zones/Zones areas" unique_id=2019487369]
+position = Vector2(1488, 88)
+scale = Vector2(0.5, 0.5)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Zones/Zones areas/zone2" unique_id=1867400290]
+position = Vector2(16.5, 11)
+shape = SubResource("RectangleShape2D_d1ilt")
+
+[node name="zone3" type="Area2D" parent="Zones/Zones areas" unique_id=648172371]
+position = Vector2(1504, 792)
+scale = Vector2(0.5, 0.5)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Zones/Zones areas/zone3" unique_id=704321052]
+position = Vector2(16.5, -40)
+shape = SubResource("RectangleShape2D_d1ilt")
+
+[node name="zone4" type="Area2D" parent="Zones/Zones areas" unique_id=287508794]
+position = Vector2(1400, 1440)
+scale = Vector2(0.5, 0.5)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Zones/Zones areas/zone4" unique_id=303083311]
+position = Vector2(16.5, 11)
+shape = SubResource("RectangleShape2D_d1ilt")
+
+[node name="Zone spawn points" type="Node2D" parent="Zones" unique_id=901747693]
+
+[node name="Zone spawn point0" type="Marker2D" parent="Zones/Zone spawn points" unique_id=1989655827]
+position = Vector2(32, 32)
+scale = Vector2(0.5, 0.5)
+
+[node name="Zone spawn point1" type="Marker2D" parent="Zones/Zone spawn points" unique_id=642826158]
+position = Vector2(544, -32)
+scale = Vector2(0.5, 0.5)
+
+[node name="Zone spawn point2" type="Marker2D" parent="Zones/Zone spawn points" unique_id=177348860]
+position = Vector2(1248, -32)
+scale = Vector2(0.5, 0.5)
+
+[node name="Zone spawn point3" type="Marker2D" parent="Zones/Zone spawn points" unique_id=1036853475]
+position = Vector2(1504, 544)
+scale = Vector2(0.5, 0.5)
+
+[node name="Zone spawn point4" type="Marker2D" parent="Zones/Zone spawn points" unique_id=1440933071]
+position = Vector2(1440, 1184)
+scale = Vector2(0.5, 0.5)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=703389835]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=1206597008]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer/Control" unique_id=1944485007]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_hptm8")
+region_rect = Rect2(0, 0, 128, 128)
+patch_margin_left = 29
+patch_margin_top = 29
+patch_margin_right = 29
+patch_margin_bottom = 29
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/NinePatchRect" unique_id=1928905043]
+libraries/ = SubResource("AnimationLibrary_d1ilt")
+autoplay = &"fade"
+
+[node name="Retry button" type="TextureButton" parent="CanvasLayer/Control" unique_id=307863320]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+texture_normal = ExtResource("11_6iyac")
+texture_pressed = ExtResource("12_fdnlq")
+texture_hover = ExtResource("12_fdnlq")
+
+[connection signal="body_entered" from="Zones/Zones areas/zone" to="." method="_on_zone_body_entered" binds= [0]]
+[connection signal="body_entered" from="Zones/Zones areas/zone1" to="." method="_on_zone_body_entered" binds= [1]]
+[connection signal="body_entered" from="Zones/Zones areas/zone2" to="." method="_on_zone_body_entered" binds= [2]]
+[connection signal="body_entered" from="Zones/Zones areas/zone3" to="." method="_on_zone_body_entered" binds= [3]]
+[connection signal="body_entered" from="Zones/Zones areas/zone4" to="." method="_on_zone_body_entered" binds= [3]]
+[connection signal="pressed" from="CanvasLayer/Control/Retry button" to="." method="_on_retry_button_pressed"]

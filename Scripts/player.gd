@@ -3,23 +3,30 @@ extends Sprite2D
 @export var simple_raycast: RayCast2D
 @export var big_size_raycast: Array[RayCast2D]
 @export var rotated_center: Node2D
-
+@export var input_buffer_timer: Timer
+@export var input_buffer_time: float = 0.2
 @export var animation_player: AnimationPlayer
 
 @export var size_mouse_zone: float
 @export var big_size: bool
 var tile_pos: Vector2i
-var tween_finished: bool = true
+var move_tween_finished: bool = true
+
+var input_buffer_move_dir: Vector2
 func _ready() -> void:
+	tile_pos = position_to_tile(GlobalData.spawn_point)
 	update_pos(true)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
+	if not input_buffer_timer.is_stopped():
+		input_buffer_timer.stop()
+		move(input_buffer_move_dir)
+		return
 	if not Input.is_action_just_pressed("size"):
 		return
-		
+
 	var mouse_pos = get_global_mouse_position() - position
-	print(mouse_pos)
-	print()
+
 	if mouse_pos.length_squared() < size_mouse_zone * size_mouse_zone:
 		switch_size()
 	else:
@@ -29,12 +36,17 @@ func _process(delta: float) -> void:
 			move(Vector2i.DOWN if mouse_pos.y > 0 else Vector2i.UP)
 
 func move(direction: Vector2i) -> void:
+	if not move_tween_finished or animation_player.is_playing():
+		input_buffer_timer.wait_time = input_buffer_time
+		input_buffer_timer.start()
+		input_buffer_move_dir = direction
+		return
 	var can_move = false
 	if big_size:
 		can_move = check_can_move(direction, big_size_raycast)
 	else:
 		can_move = check_can_move(direction, [simple_raycast])
-	if can_move and tween_finished:
+	if can_move:
 		tile_pos += direction
 		update_pos(false)
 
@@ -70,21 +82,24 @@ func check_can_move(direction: Vector2i, to_check_raycasts: Array[RayCast2D]) ->
 	return can_move
 
 func set_raycast_target_to(relative_target_tile_pos: Vector2i):
-	simple_raycast.target_position = (tile_to_position(relative_target_tile_pos + tile_pos, true) - tile_to_position(tile_pos, true)) * (1.5 if big_size else 2)
+	simple_raycast.target_position = (tile_to_position(relative_target_tile_pos + tile_pos) - tile_to_position(tile_pos)) * (1.5 if big_size else 2.0)
 	simple_raycast.force_raycast_update()
 
-func tile_to_position(tile_pos: Vector2i, for_player: bool) -> Vector2:
-	var pos = tile_pos * 64
-	if for_player:
-		pos += (Vector2i.ZERO if big_size else Vector2i(32, 32))
-	return pos
-	
+func tile_to_position(tile_pos_to_convert: Vector2i) -> Vector2:
+	var pos = tile_pos_to_convert * 64
+	return pos + tile_shift()
+
+func position_to_tile(position_to_convert: Vector2) -> Vector2i:
+	position_to_convert -= Vector2(tile_shift())
+	return Vector2i(position_to_convert / 64)
+func tile_shift() -> Vector2i:
+	return  Vector2.ZERO if big_size else Vector2(32, 32)
 func update_pos(instantanious: bool) -> void:
-	var target = tile_to_position(tile_pos, true)
+	var target = tile_to_position(tile_pos)
 	if instantanious:
 		position = target
 	else:
-		tween_finished = false
+		move_tween_finished = false
 		var tween = create_tween()
 		var movement = target - position
 		var overshoot = target + movement.normalized() * 4.0 # 4 pixels de dépassement
@@ -100,8 +115,8 @@ func update_pos(instantanious: bool) -> void:
 		var tween2 = create_tween()
 		var initial_scale = scale
 		var final_scale = scale
-		final_scale.y *= 0.7 if movement.x < movement.y else 1
-		final_scale.x *= 0.7 if movement.x > movement.y else 1
+		final_scale.y *= 0.7 if movement.x < movement.y else 1.0
+		final_scale.x *= 0.7 if movement.x > movement.y else 1.0
 		
 		tween2.tween_property(self, "scale", final_scale, 0.1) \
 			.set_trans(Tween.TRANS_CUBIC) \
@@ -112,7 +127,7 @@ func update_pos(instantanious: bool) -> void:
 			.set_ease(Tween.EASE_OUT)
 		
 		await tween.finished
-		tween_finished = true
+		move_tween_finished = true
 
 func switch_size() -> void:
 	if animation_player.is_playing():

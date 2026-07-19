@@ -28,6 +28,3 @@ func update_pos(instantanious: bool) -> void:
 	else:
 		var tween = create_tween()
 		tween.tween_property(self, "position", Vector2(target), 0.08)
-
-func _process(delta: float) -> void:
-	pass
