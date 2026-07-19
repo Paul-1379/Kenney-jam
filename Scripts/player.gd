@@ -7,7 +7,10 @@ extends Sprite2D
 @export var input_buffer_timer: Timer
 @export var input_buffer_time: float = 0.2
 @export var animation_player: AnimationPlayer
-
+@export_group("sfx")
+@export var push_sfx: AudioStreamPlayer2D
+@export var grow_sfx: AudioStreamPlayer2D
+@export var shrink_sfx: AudioStreamPlayer2D
 @export_group("Player sprites")
 @export var down_sprite: Texture
 @export var up_sprite: Texture
@@ -102,8 +105,11 @@ func check_can_move(direction: Vector2i, to_check_raycasts: Array[RayCast2D]) ->
 	if can_move:
 		for checked in checked_nodes:
 			checked.apply_move(direction)
+	if can_move and checked_nodes.size() > 0:
+		play_sound(push_sfx)
 	return can_move
-
+func play_sound(sfx: AudioStreamPlayer2D) -> void:
+	sfx.play()
 func set_raycast_target_to(relative_target_tile_pos: Vector2i):
 	simple_raycast.target_position = (tile_to_position(relative_target_tile_pos + tile_pos) - tile_to_position(tile_pos)) * (1.5 if big_size else 2.0)
 	simple_raycast.force_raycast_update()
@@ -175,4 +181,5 @@ func switch_size() -> void:
 	
 	big_size = not big_size
 	animation_player.play("grow" if big_size else "shrink")
+	play_sound(grow_sfx if big_size else shrink_sfx)
 	update_pos(false)

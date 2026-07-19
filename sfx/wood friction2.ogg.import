@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://lcq4qt0hq16t"
+path="res://.godot/imported/wood friction2.ogg-e6dcbbf51819223b9226bbaec9c0d249.oggvorbisstr"
+
+[deps]
+
+source_file="res://sfx/wood friction2.ogg"
+dest_files=["res://.godot/imported/wood friction2.ogg-e6dcbbf51819223b9226bbaec9c0d249.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

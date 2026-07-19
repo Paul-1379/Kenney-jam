@@ -9,21 +9,28 @@
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="6_344ge"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="7_344ge"]
 [ext_resource type="Texture2D" uid="uid://pysq68v8sv20" path="res://Sprites/kenney_sokoban-pack/PNG/Retina/Player/player_03.png" id="7_pdsj5"]
+[ext_resource type="AudioStream" uid="uid://w38rqtsuqu4d" path="res://sfx/lowThreeTone.ogg" id="8_7k868"]
 [ext_resource type="Texture2D" uid="uid://bm1fepne06yl5" path="res://Sprites/kenney_sokoban-pack/PNG/Retina/Player/player_06.png" id="8_ee4r6"]
 [ext_resource type="Texture2D" uid="uid://4l6q46pytmjs" path="res://Sprites/kenney_sokoban-pack/PNG/Retina/Player/player_20.png" id="9_gt3je"]
+[ext_resource type="AudioStream" uid="uid://d0awb5c6rfwwa" path="res://sfx/lowDown.ogg" id="9_hpc6h"]
 [ext_resource type="Texture2D" uid="uid://dyb26qfrjpnm4" path="res://Sprites/kenney_sokoban-pack/PNG/Retina/Player/player_17.png" id="10_3pmx8"]
 [ext_resource type="Texture2D" uid="uid://ba6mvw5lm4si6" path="res://Sprites/kenney_ui-pack-adventure/panel_grey_bolts_dark.png" id="10_hptm8"]
+[ext_resource type="AudioStream" uid="uid://lcq4qt0hq16t" path="res://sfx/wood friction2.ogg" id="10_ueoa1"]
 [ext_resource type="Texture2D" uid="uid://d10qbr4lk4r26" path="res://Sprites/kenney_cursor-pack/rotate_ccw.png" id="12_fdnlq"]
 [ext_resource type="Texture2D" uid="uid://cx7yk1po8wuwq" path="res://Sprites/kenney_cursor-pack/hand_point.png" id="12_h1bgf"]
 [ext_resource type="Texture2D" uid="uid://cloquartgwv0d" path="res://Sprites/kenney_sokoban-pack/PNG/Retina/playerFace.png" id="13_jkdf5"]
 [ext_resource type="Texture2D" uid="uid://cxugiyliyfmic" path="res://Sprites/kenney_cursor-pack/arrow_e.png" id="15_wsu2k"]
 [ext_resource type="Texture2D" uid="uid://dqf1o1qfkmqwp" path="res://Sprites/kenney_cursor-pack/cursor_exclamation.png" id="16_k12tt"]
+[ext_resource type="Texture2D" uid="uid://bao2cm8b56ot1" path="res://Sprites/kenney_cursor-pack/rotate_ccw_outline.png" id="19_u50mg"]
 [ext_resource type="Script" uid="uid://crn2sqbdsy8h0" path="res://Scripts/confettis.gd" id="22_ee4r6"]
 [ext_resource type="Texture2D" uid="uid://0kro12xw0aqu" path="res://Sprites/kenney_sokoban-pack/PNG/Retina/Environment/environment_02.png" id="23_1w6v2"]
 [ext_resource type="Texture2D" uid="uid://biv46c8vadp8o" path="res://Sprites/kenney_sokoban-pack/PNG/Retina/Environment/environment_05.png" id="24_ueoa1"]
 [ext_resource type="Texture2D" uid="uid://meb6xvsyyv3n" path="res://Sprites/kenney_sokoban-pack/PNG/Retina/Environment/environment_08.png" id="25_6vcvc"]
 [ext_resource type="Texture2D" uid="uid://dopugbc4go2x7" path="res://Sprites/kenney_sokoban-pack/PNG/Retina/Environment/environment_10.png" id="26_7k868"]
+[ext_resource type="AudioStream" uid="uid://cosjnp2gtce2y" path="res://music/cozy_puzzle_title_bpm95.ogg" id="26_cbgmd"]
+[ext_resource type="Script" uid="uid://w6kc4solgsi5" path="res://Scripts/music.gd" id="27_1w6v2"]
 [ext_resource type="Texture2D" uid="uid://cb5w6l5ncqwtt" path="res://Sprites/kenney_sokoban-pack/PNG/Retina/Environment/environment_14.png" id="27_hpc6h"]
+[ext_resource type="AudioStream" uid="uid://citkhmu1ywl0w" path="res://sfx/pepSound1.ogg" id="31_hpc6h"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8gbba"]
 texture = ExtResource("1_bo1nx")
@@ -286,16 +293,14 @@ _data = {
 &"fade": SubResource("Animation_hptm8")
 }
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_u50mg"]
-load_path = "res://.godot/imported/rotate_ccw.png-1bb2eb1d985a6080ab4ea42f3292fc85.ctex"
-
-[node name="Node2D" type="Node2D" unique_id=751346783 node_paths=PackedStringArray("playerBody", "phantomCamera", "zone_centers", "zone_spawn_points", "confettis")]
+[node name="Node2D" type="Node2D" unique_id=751346783 node_paths=PackedStringArray("playerBody", "phantomCamera", "zone_centers", "zone_spawn_points", "confettis", "music_player")]
 script = ExtResource("1_ynf5e")
 playerBody = NodePath("Player/CharacterBody2D")
 phantomCamera = NodePath("PhantomCamera2D")
 zone_centers = [NodePath("Zones/Zone centers/Zone center0"), NodePath("Zones/Zone centers/Zone center1"), NodePath("Zones/Zone centers/Zone center2"), NodePath("Zones/Zone centers/Zone center3"), NodePath("Zones/Zone centers/Zone center4"), NodePath("Zones/Zone centers/Zone center5"), NodePath("Zones/Zone centers/Zone center6"), NodePath("Zones/Zone centers/Zone center7"), NodePath("Zones/Zone centers/Zone center8"), NodePath("Zones/Zone centers/Zone center9")]
 zone_spawn_points = [NodePath("Zones/Zone spawn points/Zone spawn point0"), NodePath("Zones/Zone spawn points/Zone spawn point1"), NodePath("Zones/Zone spawn points/Zone spawn point2"), NodePath("Zones/Zone spawn points/Zone spawn point3"), NodePath("Zones/Zone spawn points/Zone spawn point4"), NodePath("Zones/Zone spawn points/Zone spawn point5"), NodePath("Zones/Zone spawn points/Zone spawn point6"), NodePath("Zones/Zone spawn points/Zone spawn point7"), NodePath("Zones/Zone spawn points/Zone spawn point8"), NodePath("Zones/Zone spawn points/Zone spawn point9")]
 confettis = NodePath("CanvasLayer/UI/Confettis")
+music_player = NodePath("Music")
 
 [node name="Tilemap" type="Node2D" parent="." unique_id=1225153605]
 
@@ -315,7 +320,7 @@ tile_set = SubResource("TileSet_jjvhh")
 tile_map_data = PackedByteArray("AAAAAP3/AAAGAAcAAAAAAAIAAAAGAAcAAAABAP3/AAAGAAcAAAABAAIAAAAGAAcAAAACAP3/AAAGAAcAAAACAAIAAAAGAAcAAAADAP3/AAAGAAcAAAADAAIAAAAGAAcAAAAEAP7/AAAGAAcAAAAEAAAAAAAGAAcAAAAFAP7/AAAGAAcAAAAFAAAAAAAGAAcAAAAGAP7/AAAGAAcAAAAGAAAAAAAGAAcAAAAHAP7/AAAGAAcAAAAHAAAAAAAGAAcAAAAIAP7/AAAGAAcAAAAIAAAAAAAGAAcAAAAJAAMAAAAGAAcAAAAKAAMAAAAGAAcAAAALAAMAAAAGAAcAAAAMAAMAAAAGAAcAAAANAAMAAAAGAAcAAAAOAP3/AAAGAAcAAAAOAAMAAAAGAAcAAAAPAP7/AAAGAAcAAAAPAAAAAAAGAAcAAAAQAP7/AAAGAAcAAAAQAAAAAAAGAAcAAAARAP7/AAAGAAcAAAARAAAAAAAGAAcAAAASAP7/AAAGAAcAAAASAAAAAAAGAAcAAAATAP7/AAAGAAcAAAATAAAAAAAGAAcAAAAUAP3/AAAGAAcAAAAUAAAAAAAGAAcAAAAUAAEAAAAGAAcAAAAUAAQAAAAGAAcAAAAVAP3/AAAGAAcAAAAVAAAAAAAGAAcAAAAVAAEAAAAGAAcAAAAVAAQAAAAGAAcAAAAWAP3/AAAGAAcAAAAXAP3/AAAGAAcAAAAYAP3/AAAGAAcAAAAZAP3/AAAGAAcAAAAZAAAAAAAGAAcAAAAZAAQAAAAGAAcAAAAaAP3/AAAGAAcAAAAaAAAAAAAGAAcAAAAaAAEAAAAGAAcAAAAaAAQAAAAGAAcAAAD///3/AAAGAAcAAAD///7/AAAGAAcAAAD/////AAAGAAcAAAD//wAAAAAGAAcAAAD//wEAAAAGAAcAAAD//wIAAAAGAAcAAAABAP//AAAGAAcAAAABAAAAAAAGAAcAAAADAP7/AAAGAAcAAAADAAAAAAAGAAcAAAADAAEAAAAGAAcAAAAIAP3/AAAGAAcAAAAIAAEAAAAGAAcAAAAIAAIAAAAGAAcAAAAIAAMAAAAGAAcAAAAOAP7/AAAGAAcAAAAOAAAAAAAGAAcAAAAOAAEAAAAGAAcAAAAOAAIAAAAGAAcAAAATAP3/AAAGAAcAAAAYAAAAAAAGAAcAAAAYAAQAAAAGAAcAAAAZAAEAAAAGAAcAAAAaAP7/AAAGAAcAAAAaAP//AAAGAAcAAAAaAAIAAAAGAAcAAAAaAAMAAAAGAAcAAAAOAPz/AAAGAAcAAAANAPz/AAAGAAcAAAAMAPz/AAAGAAcAAAALAPz/AAAGAAcAAAAKAPz/AAAGAAcAAAAJAPz/AAAGAAcAAAAIAPz/AAAGAAcAAAAWAAQAAAAGAAcAAAAUAAIAAAAGAAcAAAAUAAMAAAAGAAcAAAAWAAUAAAAGAAcAAAAWAAYAAAAGAAcAAAAWAAcAAAAGAAcAAAAYAAUAAAAGAAcAAAAYAAYAAAAGAAcAAAAYAAcAAAAGAAcAAAAaAAcAAAAGAAcAAAAZAAcAAAAGAAcAAAAaAAgAAAAGAAcAAAAaAAoAAAAGAAcAAAAaAAsAAAAGAAcAAAAXAA4AAAAGAAcAAAAVAA8AAAAGAAcAAAAVABAAAAAGAAcAAAAXAA8AAAAGAAcAAAAXABAAAAAGAAcAAAAXABEAAAAGAAcAAAAVABEAAAAGAAcAAAAXABIAAAAGAAcAAAAYABIAAAAGAAcAAAAYABMAAAAGAAcAAAAVABIAAAAGAAcAAAAUABIAAAAGAAcAAAATABIAAAAGAAcAAAASABIAAAAGAAcAAAARABIAAAAGAAcAAAARABMAAAAGAAcAAAARABQAAAAGAAcAAAARABUAAAAGAAcAAAASABUAAAAGAAcAAAASABYAAAAGAAcAAAATABYAAAAGAAcAAAAUABcAAAAGAAcAAAAVABcAAAAGAAcAAAATABcAAAAGAAcAAAAWABcAAAAGAAcAAAAaABQAAAAGAAcAAAAaABUAAAAGAAcAAAAaABYAAAAGAAcAAAAYABcAAAAGAAcAAAAYABQAAAAGAAcAAAAZABQAAAAGAAcAAAAZABcAAAAGAAcAAAAaABcAAAAGAAcAAAAUAAoAAAAGAAcAAAAWAAkAAAAGAAcAAAAVAAkAAAAGAAcAAAAUAA8AAAAGAAcAAAATAA8AAAAGAAcAAAATAA4AAAAGAAcAAAATAA0AAAAGAAcAAAATAAwAAAAGAAcAAAAbAA0AAAAGAAcAAAAcAA0AAAAGAAcAAAAcAAoAAAAGAAcAAAAcAAkAAAAGAAcAAAAcAAgAAAAGAAcAAAAcAAsAAAAGAAcAAAAcAAwAAAAGAAcAAAAbAAgAAAAGAAcAAAAYAA4AAAAGAAcAAAAZAA4AAAAGAAcAAAAaAA4AAAAGAAcAAAAbAA4AAAAGAAcAAAAVAAwAAAAGAAcAAAAWAA0AAAAGAAcAAAATAAoAAAAGAAcAAAATAAsAAAAGAAcAAAAWAAgAAAAGAAcAAAAVAAoAAAAGAAcAAAAXAA0AAAAGAAcAAAAWABgAAAAGAAcAAAAYABgAAAAGAAcAAAAWABkAAAAGAAcAAAAYABkAAAAGAAcAAAAWABoAAAAGAAcAAAAYABoAAAAGAAcAAAAZABoAAAAGAAcAAAATAB4AAAAGAAcAAAAZABwAAAAGAAcAAAAZAB0AAAAGAAcAAAAZAB4AAAAGAAcAAAAZAB8AAAAGAAcAAAAUAB4AAAAGAAcAAAAUACAAAAAGAAcAAAAVACAAAAAGAAcAAAAYACAAAAAGAAcAAAAZACAAAAAGAAcAAAAVABsAAAAGAAcAAAAZABsAAAAGAAcAAAAUABwAAAAGAAcAAAATABwAAAAGAAcAAAASAB4AAAAGAAcAAAARAB4AAAAGAAcAAAASABwAAAAGAAcAAAARABwAAAAGAAcAAAARABsAAAAGAAcAAAARAB8AAAAGAAcAAAARACAAAAAGAAcAAAARACEAAAAGAAcAAAAQACEAAAAGAAcAAAAPACEAAAAGAAcAAAAKAB8AAAAGAAcAAAARABoAAAAGAAcAAAAQABoAAAAGAAcAAAAPABoAAAAGAAcAAAAOABoAAAAGAAcAAAANABoAAAAGAAcAAAAKABkAAAAGAAcAAAAKABoAAAAGAAcAAAAKABsAAAAGAAcAAAAKABwAAAAGAAcAAAAKACAAAAAGAAcAAAANABsAAAAGAAcAAAAIAB4AAAAGAAcAAAAJAB4AAAAGAAcAAAAKAB4AAAAGAAcAAAAJABwAAAAGAAcAAAAIABwAAAAGAAcAAAAOACIAAAAGAAcAAAANACIAAAAGAAcAAAAMACIAAAAGAAcAAAAPACIAAAAGAAcAAAALACAAAAAGAAcAAAAMACAAAAAGAAcAAAAMACEAAAAGAAcAAAAHAB4AAAAGAAcAAAAHAB8AAAAGAAcAAAAHACAAAAAGAAcAAAAFACAAAAAGAAcAAAAEACAAAAAGAAcAAAAGACAAAAAGAAcAAAADAB4AAAAGAAcAAAACAB4AAAAGAAcAAAABAB4AAAAGAAcAAAABAB0AAAAGAAcAAAABABwAAAAGAAcAAAAHABwAAAAGAAcAAAAHABsAAAAGAAcAAAAGABoAAAAGAAcAAAAGABcAAAAGAAcAAAABABcAAAAGAAcAAAABABgAAAAGAAcAAAABABkAAAAGAAcAAAABABoAAAAGAAcAAAABABsAAAAGAAcAAAAGABYAAAAGAAcAAAACABYAAAAGAAcAAAAKABgAAAAGAAcAAAAKABcAAAAGAAcAAAAKABYAAAAGAAcAAAAIABcAAAAGAAcAAAAIABYAAAAGAAcAAAAUABsAAAAGAAcAAAAUAB8AAAAGAAcAAAAWABsAAAAGAAcAAAAVAB4AAAAGAAcAAAALABoAAAAGAAcAAAAMABoAAAAGAAcAAAABABYAAAAGAAcAAAAHABcAAAAGAAcAAAADABkAAAAGAAcAAAAGABkAAAAGAAcAAAAHABkAAAAGAAcAAAAIABkAAAAGAAcAAAAJABkAAAAGAAcAAAAXACAAAAAGAAcAAAAWACAAAAAGAAcAAAACABUAAAAGAAcAAAADABUAAAAGAAcAAAAEABUAAAAGAAcAAAAFABUAAAAGAAcAAAAGABUAAAAGAAcAAAAIABUAAAAGAAcAAAAKABUAAAAGAAcAAAAHABUAAAAGAAcAAAAIAA8AAAAGAAcAAAAKAA8AAAAGAAcAAAAJAA8AAAAGAAcAAAAKABQAAAAGAAcAAAAKABMAAAAGAAcAAAALABMAAAAGAAcAAAALABIAAAAGAAcAAAAMABIAAAAGAAcAAAAMABEAAAAGAAcAAAAMABAAAAAGAAcAAAAMAA8AAAAGAAcAAAALAA8AAAAGAAcAAAAHABEAAAAGAAcAAAAGABEAAAAGAAcAAAAFABEAAAAGAAcAAAAEABEAAAAGAAcAAAAEAA8AAAAGAAcAAAAEABAAAAAGAAcAAAAFAA8AAAAGAAcAAAAHAA8AAAAGAAcAAAAGABIAAAAGAAcAAAAGABMAAAAGAAcAAAAGABQAAAAGAAcAAAAFAA4AAAAGAAcAAAAHAA4AAAAGAAcAAAAEAB4AAAAGAAcAAAAEAB8AAAAGAAcAAAAFAA0AAAAGAAcAAAAEAA0AAAAGAAcAAAADAA0AAAAGAAcAAAACAA0AAAAGAAcAAAACAAwAAAAGAAcAAAACAAsAAAAGAAcAAAACAAoAAAAGAAcAAAACAAkAAAAGAAcAAAACAAgAAAAGAAcAAAACAAcAAAAGAAcAAAACAAYAAAAGAAcAAAACAAUAAAAGAAcAAAADAAUAAAAGAAcAAAAEAAUAAAAGAAcAAAAFAAUAAAAGAAcAAAAGAAUAAAAGAAcAAAAHAAUAAAAGAAcAAAAJAAUAAAAGAAcAAAAIAAUAAAAGAAcAAAAJAAYAAAAGAAcAAAAJAAcAAAAGAAcAAAAJAAgAAAAGAAcAAAAJAAkAAAAGAAcAAAAJAAoAAAAGAAcAAAAJAAsAAAAGAAcAAAAJAAwAAAAGAAcAAAAJAA0AAAAGAAcAAAAIAA0AAAAGAAcAAAAHAA0AAAAGAAcAAAA=")
 tile_set = SubResource("TileSet_jjvhh")
 
-[node name="Player" type="Sprite2D" parent="." unique_id=1396035597 node_paths=PackedStringArray("simple_raycast", "big_size_raycast", "rotated_center", "input_buffer_timer", "animation_player")]
+[node name="Player" type="Sprite2D" parent="." unique_id=1396035597 node_paths=PackedStringArray("simple_raycast", "big_size_raycast", "rotated_center", "input_buffer_timer", "animation_player", "push_sfx", "grow_sfx", "shrink_sfx")]
 position = Vector2(416, 992)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("7_pdsj5")
@@ -326,6 +331,9 @@ rotated_center = NodePath("rotated_center")
 input_buffer_timer = NodePath("input buffer timer")
 input_buffer_time = 1.0
 animation_player = NodePath("AnimationPlayer")
+push_sfx = NodePath("crate push sfx")
+grow_sfx = NodePath("grow sfx")
+shrink_sfx = NodePath("shrink sfx")
 down_sprite = ExtResource("7_pdsj5")
 up_sprite = ExtResource("8_ee4r6")
 left_sprite = ExtResource("9_gt3je")
@@ -361,6 +369,24 @@ shape = SubResource("RectangleShape2D_ynf5e")
 [node name="input buffer timer" type="Timer" parent="Player" unique_id=1966348709]
 one_shot = true
 ignore_time_scale = true
+
+[node name="crate push sfx" type="AudioStreamPlayer2D" parent="Player" unique_id=1458043349]
+position = Vector2(416, 992)
+scale = Vector2(0.5, 0.5)
+stream = ExtResource("10_ueoa1")
+volume_db = 24.0
+
+[node name="grow sfx" type="AudioStreamPlayer2D" parent="Player" unique_id=1179175129]
+position = Vector2(416, 992)
+scale = Vector2(0.5, 0.5)
+stream = ExtResource("8_7k868")
+volume_db = 24.0
+
+[node name="shrink sfx" type="AudioStreamPlayer2D" parent="Player" unique_id=509876440]
+position = Vector2(416, 992)
+scale = Vector2(0.5, 0.5)
+stream = ExtResource("9_hpc6h")
+volume_db = 24.0
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1506383792]
 top_level = true
@@ -708,12 +734,14 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -40.0
-offset_bottom = 40.0
+offset_left = -101.0
+offset_top = 37.0
+offset_right = -37.0
+offset_bottom = 101.0
 grow_horizontal = 0
-texture_normal = SubResource("CompressedTexture2D_u50mg")
-texture_pressed = ExtResource("12_fdnlq")
-texture_hover = ExtResource("12_fdnlq")
+texture_normal = ExtResource("12_fdnlq")
+texture_pressed = ExtResource("19_u50mg")
+texture_hover = ExtResource("19_u50mg")
 
 [node name="confetti timer" type="Timer" parent="CanvasLayer/UI" unique_id=1756716372]
 autostart = true
@@ -724,6 +752,19 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("22_ee4r6")
 confettis_textures = Array[Texture]([ExtResource("23_1w6v2"), ExtResource("24_ueoa1"), ExtResource("25_6vcvc"), ExtResource("26_7k868"), ExtResource("27_hpc6h")])
+
+[node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=1820690102 node_paths=PackedStringArray("retry_sfx")]
+position = Vector2(416, 992)
+scale = Vector2(0.5, 0.5)
+stream = ExtResource("26_cbgmd")
+script = ExtResource("27_1w6v2")
+retry_sfx = NodePath("../retry sfx")
+
+[node name="retry sfx" type="AudioStreamPlayer2D" parent="." unique_id=284814787]
+position = Vector2(416, 992)
+scale = Vector2(0.5, 0.5)
+stream = ExtResource("31_hpc6h")
+volume_db = 24.0
 
 [connection signal="body_entered" from="Zones/Zones areas/zone" to="." method="_on_zone_body_entered" binds= [0]]
 [connection signal="body_entered" from="Zones/Zones areas/zone1" to="." method="_on_zone_body_entered" binds= [1]]
