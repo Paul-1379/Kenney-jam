@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="Kenney jam"
+config/name="Sokoscale"
 run/main_scene="uid://bsipgyrcevpj6"
 config/features=PackedStringArray("4.6", "Mobile")
-config/icon="res://icon.svg"
+config/icon="uid://cloquartgwv0d"
 
 [autoload]
 
@@ -24,6 +24,8 @@ GlobalData="*uid://8wxsohuyhp4f"
 
 window/size/viewport_width=1080
 window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 
 [editor_plugins]
 

@@ -12,14 +12,12 @@
 [ext_resource type="Texture2D" uid="uid://bm1fepne06yl5" path="res://Sprites/kenney_sokoban-pack/PNG/Retina/Player/player_06.png" id="8_ee4r6"]
 [ext_resource type="Texture2D" uid="uid://4l6q46pytmjs" path="res://Sprites/kenney_sokoban-pack/PNG/Retina/Player/player_20.png" id="9_gt3je"]
 [ext_resource type="Texture2D" uid="uid://dyb26qfrjpnm4" path="res://Sprites/kenney_sokoban-pack/PNG/Retina/Player/player_17.png" id="10_3pmx8"]
-[ext_resource type="Texture2D" uid="uid://ba6mvw5lm4si6" path="res://Sprites/kenney_ui-pack-adventure/PNG/Double/panel_grey_bolts_dark.png" id="10_hptm8"]
-[ext_resource type="Texture2D" uid="uid://choswltdtowyh" path="res://Sprites/kenney_cursor-pack/PNG/Basic/Double/rotate_ccw.png" id="11_6iyac"]
-[ext_resource type="Texture2D" uid="uid://d10qbr4lk4r26" path="res://Sprites/kenney_cursor-pack/PNG/Outline/Double/rotate_ccw.png" id="12_fdnlq"]
-[ext_resource type="Texture2D" uid="uid://cx7yk1po8wuwq" path="res://Sprites/kenney_cursor-pack/PNG/Outline/Double/hand_point.png" id="12_h1bgf"]
+[ext_resource type="Texture2D" uid="uid://ba6mvw5lm4si6" path="res://Sprites/kenney_ui-pack-adventure/panel_grey_bolts_dark.png" id="10_hptm8"]
+[ext_resource type="Texture2D" uid="uid://d10qbr4lk4r26" path="res://Sprites/kenney_cursor-pack/rotate_ccw.png" id="12_fdnlq"]
+[ext_resource type="Texture2D" uid="uid://cx7yk1po8wuwq" path="res://Sprites/kenney_cursor-pack/hand_point.png" id="12_h1bgf"]
 [ext_resource type="Texture2D" uid="uid://cloquartgwv0d" path="res://Sprites/kenney_sokoban-pack/PNG/Retina/playerFace.png" id="13_jkdf5"]
-[ext_resource type="Texture2D" uid="uid://bun7ioq50re8b" path="res://Sprites/kenney_sokoban-pack/PNG/Default size/playerFace.png" id="14_wsu2k"]
-[ext_resource type="Texture2D" uid="uid://cxugiyliyfmic" path="res://Sprites/kenney_cursor-pack/PNG/Outline/Double/arrow_e.png" id="15_wsu2k"]
-[ext_resource type="Texture2D" uid="uid://dqf1o1qfkmqwp" path="res://Sprites/kenney_cursor-pack/PNG/Outline/Double/cursor_exclamation.png" id="16_k12tt"]
+[ext_resource type="Texture2D" uid="uid://cxugiyliyfmic" path="res://Sprites/kenney_cursor-pack/arrow_e.png" id="15_wsu2k"]
+[ext_resource type="Texture2D" uid="uid://dqf1o1qfkmqwp" path="res://Sprites/kenney_cursor-pack/cursor_exclamation.png" id="16_k12tt"]
 [ext_resource type="Script" uid="uid://crn2sqbdsy8h0" path="res://Scripts/confettis.gd" id="22_ee4r6"]
 [ext_resource type="Texture2D" uid="uid://0kro12xw0aqu" path="res://Sprites/kenney_sokoban-pack/PNG/Retina/Environment/environment_02.png" id="23_1w6v2"]
 [ext_resource type="Texture2D" uid="uid://biv46c8vadp8o" path="res://Sprites/kenney_sokoban-pack/PNG/Retina/Environment/environment_05.png" id="24_ueoa1"]
@@ -288,6 +286,9 @@ _data = {
 &"fade": SubResource("Animation_hptm8")
 }
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_u50mg"]
+load_path = "res://.godot/imported/rotate_ccw.png-1bb2eb1d985a6080ab4ea42f3292fc85.ctex"
+
 [node name="Node2D" type="Node2D" unique_id=751346783 node_paths=PackedStringArray("playerBody", "phantomCamera", "zone_centers", "zone_spawn_points", "confettis")]
 script = ExtResource("1_ynf5e")
 playerBody = NodePath("Player/CharacterBody2D")
@@ -384,7 +385,8 @@ texture = ExtResource("13_jkdf5")
 
 [node name="player icon small" type="Sprite2D" parent="scale tuto" unique_id=1981001666]
 position = Vector2(576, -320)
-texture = ExtResource("14_wsu2k")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("13_jkdf5")
 
 [node name="CursorExclamation" type="Sprite2D" parent="scale tuto" unique_id=732162172]
 position = Vector2(592, -296)
@@ -392,7 +394,7 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("16_k12tt")
 
 [node name="movement tuto" type="Node2D" parent="." unique_id=613164951]
-position = Vector2(-384, 32)
+position = Vector2(-224, 32)
 
 [node name="ArrowE" type="Sprite2D" parent="movement tuto" unique_id=1029669473]
 position = Vector2(64, -32)
@@ -416,7 +418,8 @@ texture = ExtResource("15_wsu2k")
 
 [node name="player icon small" type="Sprite2D" parent="movement tuto" unique_id=970919626]
 position = Vector2(0, -32)
-texture = ExtResource("14_wsu2k")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("13_jkdf5")
 
 [node name="CursorExclamation" type="Sprite2D" parent="movement tuto" unique_id=1658951129]
 position = Vector2(128, -32)
@@ -708,7 +711,7 @@ anchor_right = 1.0
 offset_left = -40.0
 offset_bottom = 40.0
 grow_horizontal = 0
-texture_normal = ExtResource("11_6iyac")
+texture_normal = SubResource("CompressedTexture2D_u50mg")
 texture_pressed = ExtResource("12_fdnlq")
 texture_hover = ExtResource("12_fdnlq")
 
